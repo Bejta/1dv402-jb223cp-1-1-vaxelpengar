@@ -24,9 +24,10 @@ namespace _1DV402.S1.L02B
             //Anropar metod ReadPositiveDouble för att användaren ska mata in 
             subtotal = ReadPositiveDouble("Ange totalsumma     : ");
 
-            //Avrundar bellopet till ett heltal och sedan avropar metoden ReadUnit för att användaren ska mata in en summa 
+            /*Avrundar bellopet till ett heltal och sedan avropar metoden ReadUnit 
+            och sedan räknar bellopet som ska kunden få tillbaka*/
             totalToPay = (uint)Math.Round(subtotal);
-            totalAmount = ReadUint("Ange erhållet belopp: ", (uint)Math.Round(subtotal));
+            totalAmount = ReadUint("Ange erhållet belopp: ", totalToPay);
             roundingOffAmount = totalToPay - subtotal;
             change = totalAmount - totalToPay;
 
@@ -42,16 +43,73 @@ namespace _1DV402.S1.L02B
             Console.WriteLine("-------------------------------");
 
             //anropar metoden SplitIntoDenominations
-            SplitIntoDenominations(change);
+            //SplitIntoDenominations(change);
 
         }
         private static double ReadPositiveDouble(string prompt)
         {
+            while (true)
+            {
+                double money = 0.00;
+                Console.Write("{0}", prompt);
+                string userInput = Console.ReadLine();
 
+                try
+                {
+
+                    money = Convert.ToDouble(userInput);
+                    if (money >= 1)
+                    {
+                        return money;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.Write("\nFEL! '" + money + "' kan inte tolkas som en giltig summa pengar.\n\n");
+                        Console.ResetColor();
+                    }
+                }
+                catch
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.Write("\nFEL! \'{0}\' kan inte tolkas som en giltig summa pengar.\n\n", userInput);
+                    Console.ResetColor();
+                }
+
+            }
         }
         private static uint ReadUint (string prompt, uint minValue)
         {
+            while (true)
+            {
+                uint value = 0;
+                Console.Write("{0}", prompt);
+                string userInput = Console.ReadLine();
 
+                try
+                {
+
+                    value = uint.Parse(userInput);
+                    if (value >= minValue)
+                    {
+                        return value;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.Write("\nFEL!\'{0}\' är ett för litet belopp.\n\n", value);
+                        Console.ResetColor();
+                    }
+
+                }
+                catch
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.Write("\nFEL! \'{0}\' kan inte tolkas som en summa pengar.\n\n", userInput);
+                    Console.ResetColor();
+                }
+
+            }
         }
         private static void SplitIntoDenominations (uint change)
         {
