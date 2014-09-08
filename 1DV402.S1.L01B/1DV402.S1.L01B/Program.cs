@@ -13,6 +13,8 @@ namespace _1DV402.S1.L01B
             //Sätter titel på Konsolfönstret
             Console.Title = "Växelpengar - nivå B";
 
+            while(true)
+            {
             //Deklarerar och initialiserar variabler
             double roundingOffAmount = 0.00;
             uint totalAmount = 0;
@@ -25,6 +27,7 @@ namespace _1DV402.S1.L01B
 
             /*Avrundar bellopet till ett heltal och sedan avropar metoden ReadUnit 
             och sedan räknar bellopet som ska kunden få tillbaka*/
+
             totalToPay = (uint)Math.Round(subtotal);
             totalAmount = ReadUint("Ange erhållet belopp: ", totalToPay);
             roundingOffAmount = totalToPay - subtotal;
@@ -42,7 +45,16 @@ namespace _1DV402.S1.L01B
             Console.WriteLine("-------------------------------");
 
             //anropar metoden SplitIntoDenominations
-            //SplitIntoDenominations(change);
+            SplitIntoDenominations(change);
+            
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.Write("\nTryck tangent för ny beräkning - Esc avslutar.");
+
+            if (Console.ReadKey(true).Key == ConsoleKey.Escape)
+                break;
+            Console.WriteLine("\n");
+            Console.ResetColor();
+            }
         }
         private static double ReadPositiveDouble(string prompt)
         {
@@ -111,7 +123,35 @@ namespace _1DV402.S1.L01B
         }
         private static void SplitIntoDenominations(uint change)
         {
+            {
+                uint[] myArray = new uint[7] { 500, 100, 50, 20, 10, 5, 1 };
+                uint remain = change;
 
+
+
+                foreach (uint item in myArray)
+                {
+                    if (remain != 0 && remain >= item)
+                    {
+                        /*Jag gillar inte min lösning med "Switch Case" när flera "case" lämnar tillbaka samma meddelande, 
+                        men man får inte använda if mer än en gång.*/ 
+                        switch (item)
+                        {
+                            case 10:
+                            case 5:
+                            case 1:
+                        Console.WriteLine("{0,3}{1,-14}{2}{3}", item, "-kronor", ": ", (remain / item));
+                                break;
+                            default:
+                        Console.WriteLine("{0,3}{1,-14}{2}{3}", item, "-lappar", ": ", +(remain / item));
+                                break;
+                        }
+                            
+                    }
+                    remain = remain % item;
+                }
+
+            }
         }
     }
 }
