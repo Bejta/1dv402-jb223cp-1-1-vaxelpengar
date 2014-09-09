@@ -13,48 +13,49 @@ namespace _1DV402.S1.L01B
             //Sätter titel på Konsolfönstret
             Console.Title = "Växelpengar - nivå B";
 
-            while(true)
-            {
-            //Deklarerar och initialiserar variabler
-            double roundingOffAmount = 0.00;
-            uint totalAmount = 0;
-            uint totalToPay = 0;
-            uint change = 0;
-            double subtotal = 0.00;
-
-            //Anropar metod ReadPositiveDouble för att användaren ska mata in 
-            subtotal = ReadPositiveDouble("Ange totalsumma     : ");
-
-            /*Avrundar bellopet till ett heltal och sedan avropar metoden ReadUnit 
-            och sedan räknar bellopet som ska kunden få tillbaka*/
-
-            totalToPay = (uint)Math.Round(subtotal);
-            totalAmount = ReadUint("Ange erhållet belopp: ", totalToPay);
-            roundingOffAmount = totalToPay - subtotal;
-            change = totalAmount - totalToPay;
-
-            // Skriver ut ett kvitto
-            Console.WriteLine("");
-            Console.WriteLine("KVITTO");
-            Console.WriteLine("-------------------------------");
-            Console.WriteLine("{0,-17}{1,1}{2,13:c2}", "Totalt", ":", subtotal);
-            Console.WriteLine("{0,-17}{1,1}{2,13:c2}", "Öresavrundning", ":", roundingOffAmount);
-            Console.WriteLine("{0,-17}{1,1}{2,13:c0}", "Att betala", ":", totalToPay);
-            Console.WriteLine("{0,-17}{1,1}{2,13:c0}", "Kontant", ":", totalAmount);
-            Console.WriteLine("{0,-17}{1,1}{2,13:c0}", "Tillbaka", ":", change);
-            Console.WriteLine("-------------------------------");
-
-            //anropar metoden SplitIntoDenominations
-            SplitIntoDenominations(change);
             
-            Console.BackgroundColor = ConsoleColor.DarkGreen;
-            Console.Write("\nTryck tangent för ny beräkning - Esc avslutar.");
+            do
+            {
+                //Deklarerar och initialiserar variabler
+                double roundingOffAmount = 0.00;
+                uint totalAmount = 0;
+                uint totalToPay = 0;
+                uint change = 0;
+                double subtotal = 0.00;
 
-            if (Console.ReadKey(true).Key == ConsoleKey.Escape)
-                break;
-            Console.WriteLine("\n");
-            Console.ResetColor();
-            }
+                //Anropar metod ReadPositiveDouble för att användaren ska mata in 
+                subtotal = ReadPositiveDouble("Ange totalsumma     : ");
+
+                /*Avrundar bellopet till ett heltal och sedan avropar metoden ReadUnit 
+                och sedan räknar bellopet som ska kunden få tillbaka*/
+
+                totalToPay = (uint)Math.Round(subtotal);
+                totalAmount = ReadUint("Ange erhållet belopp: ", totalToPay);
+                roundingOffAmount = totalToPay - subtotal;
+                change = totalAmount - totalToPay;
+
+                // Skriver ut ett kvitto
+                Console.WriteLine("");
+                Console.WriteLine("KVITTO");
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine("{0,-17}{1,1}{2,13:c2}", "Totalt", ":", subtotal);
+                Console.WriteLine("{0,-17}{1,1}{2,13:c2}", "Öresavrundning", ":", roundingOffAmount);
+                Console.WriteLine("{0,-17}{1,1}{2,13:c0}", "Att betala", ":", totalToPay);
+                Console.WriteLine("{0,-17}{1,1}{2,13:c0}", "Kontant", ":", totalAmount);
+                Console.WriteLine("{0,-17}{1,1}{2,13:c0}", "Tillbaka", ":", change);
+                Console.WriteLine("-------------------------------");
+
+                //anropar metoden SplitIntoDenominations
+                SplitIntoDenominations(change);
+
+                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                Console.Write("\nTryck tangent för ny beräkning - Esc avslutar.");
+
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
+                    break;
+                Console.WriteLine("\n");
+                Console.ResetColor();
+            } while (true);
         }
         private static double ReadPositiveDouble(string prompt)
         {
@@ -148,7 +149,7 @@ namespace _1DV402.S1.L01B
                         }
                             
                     }
-                    remain = remain % item;
+                    remain %= item;
                 }
 
             }
